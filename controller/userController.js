@@ -61,6 +61,8 @@ const login = async (req, res) => {
                 message: "Login successful",
                 user: {
                     id: existingUser._id,
+                    username: existingUser.username,  // <-- Add this
+                    email: existingUser.email,        // <-- And this
                     role: existingUser.role,
                     token,
                 },
