@@ -33,8 +33,12 @@ const orderSchema = new mongoose.Schema({
     type: String,
     enum: ["processing", "shipped", "delivered"],
     default: "processing"
-  }
-}, 
+  }, 
+  paymentMethod: {
+  type: String,
+  enum: ["esewa", "phonepe", "cod"],
+  default: "cod"}
+},
 );
 
 module.exports = mongoose.model("Order", orderSchema);

@@ -4,11 +4,7 @@ const Shoe = require("../models/Shoe");
 const placeOrder = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { items } = req.body;
-
-    if (!items || items.length === 0) {
-      return res.status(400).json({ message: "Cart is empty" });
-    }
+    const { items, paymentMethod } = req.body;
 
     let totalAmount = 0;
 
@@ -31,7 +27,8 @@ const placeOrder = async (req, res) => {
       user: userId,
       items,
       totalAmount,
-      paymentStatus: "pending",
+      paymentStatus: paymentMethod === "cod" ? "pending" : "paid",
+      paymentMethod,
       orderStatus: "processing"
     });
 
