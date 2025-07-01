@@ -24,6 +24,12 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  shippingDetails: {
+    name: String,
+    email: String,
+    phone: String,
+    address: String
+  },
   paymentStatus: {
     type: String,
     enum: ["pending", "paid"],
@@ -33,12 +39,13 @@ const orderSchema = new mongoose.Schema({
     type: String,
     enum: ["processing", "shipped", "delivered"],
     default: "processing"
-  }, 
+  },
   paymentMethod: {
-  type: String,
-  enum: ["esewa", "phonepe", "cod"],
-  default: "cod"}
+    type: String,
+    enum: ["esewa", "phonepe", "cod"],
+    default: "cod"
+  },
 },
-);
+  { timestamps: true },);
 
 module.exports = mongoose.model("Order", orderSchema);

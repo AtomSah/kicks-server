@@ -4,7 +4,7 @@ const Shoe = require("../models/Shoe");
 const placeOrder = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { items, paymentMethod } = req.body;
+    const { items, paymentMethod, shippingDetails } = req.body;
 
     let totalAmount = 0;
 
@@ -29,6 +29,7 @@ const placeOrder = async (req, res) => {
       totalAmount,
       paymentStatus: paymentMethod === "cod" ? "pending" : "paid",
       paymentMethod,
+      shippingDetails,
       orderStatus: "processing"
     });
 
