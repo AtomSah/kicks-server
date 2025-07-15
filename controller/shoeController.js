@@ -53,6 +53,28 @@ const deleteShoe = async (req, res) => {
     res.status(500).json({ message: "Failed to delete shoe", error });
   }
 };
+//filtering shoe
+
+const filterShoes = async (req, res) => {
+  try {
+    const { minPrice, maxPrice, sortBy } = req.query;
+    const filter = {};
+
+    if (minPrice) filter.price = { ...filter.price, $gte: Number(minPrice) };
+    if (maxPrice) filter.price = { ...filter.price, $lte: Number(maxPrice) };
+
+    let sort = {};
+    if (sortBy === 'price-low-high') sort.price = 1;
+    else if (sortBy === 'price-high-low') sort.price = -1;
+
+    const shoes = await Shoe.find(filter).sort(sort);
+    res.status(200).json(shoes);
+  } catch (err) {
+    console.error("Filter error:", err);
+    res.status(500).json({ message: 'Failed to filter shoes' });
+  }
+};
+
 
 module.exports = {
   addShoe,
@@ -60,4 +82,5 @@ module.exports = {
   getShoeById,
   updateShoe,
   deleteShoe,
+  filterShoes,
 };
